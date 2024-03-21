@@ -1,6 +1,10 @@
+import logging
 from playwright.sync_api import Page
 from pages.base_page import BasePage
 
+
+logger = logging.getLogger(__name__)
+logging.basicConfig(encoding='utf-8', level=logging.DEBUG)
 
 class LoginPage(BasePage):
     USERNAME = "#user-name"
@@ -17,8 +21,11 @@ class LoginPage(BasePage):
         self.locked_user_error_msg = self.page.locator(self.LOCKED_USER_ERROR)
     
     def login_user(self, username: str, password: str):
+        logger.info(f"enter username: {username}")
         self.enter_text(self.username, username)
+        logger.info(f"enter password: {password}")
         self.enter_text(self.password, password)
+        logger.info("click login button")
         self.login.click()
     
 

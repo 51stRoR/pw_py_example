@@ -1,3 +1,3 @@
 # pw_py_example
 
-example project
+example web UI automation project with playwright and python
