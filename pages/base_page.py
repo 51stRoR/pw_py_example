@@ -19,6 +19,10 @@ class BasePage:
         element.fill(text)
     
     def get_text(self, element: Locator):
-        logger.info("get text from element")
+        logger.info("getting text from element")
         return element.text_content()
+    
+    def wait_for_url(self, url: str):
+        logger.info(f"waiting for page to load: {url}")
+        self.page.wait_for_url(url)
     
