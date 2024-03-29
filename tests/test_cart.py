@@ -11,7 +11,7 @@ logging.basicConfig(encoding='utf-8', level=logging.DEBUG)
 
 class TestCart:
 
-    def test_add_product_from_grid(self, browser: Browser, standard_user_data):
+    def test_add_products_from_grid(self, browser: Browser, standard_user_data):
         page = browser.new_page()
         login_page = LoginPage(page)
         product_grid_page = ProductGridPage(page)
@@ -23,6 +23,11 @@ class TestCart:
         assert product_grid_page.get_text(product_grid_page.delete_button) == "Remove"
         assert product_grid_page.cart_badge.is_visible()
         assert product_grid_page.get_text(product_grid_page.cart_badge) == "1"
+        product_grid_page.add_product_by_name("Sauce Labs Fleece Jacket")
+        assert product_grid_page.delete_button.is_visible()
+        assert product_grid_page.get_text(product_grid_page.delete_button) == "Remove"
+        assert product_grid_page.cart_badge.is_visible()
+        assert product_grid_page.get_text(product_grid_page.cart_badge) == "2"
 
     def test_add_product(self, browser: Browser, standard_user_data):
         page = browser.new_page()
@@ -33,6 +38,7 @@ class TestCart:
         expect(product_grid_page.header).to_be_visible()
         product_grid_page.go_to_product_page("Sauce Labs Bolt T-Shirt")
         product_page = Productage(page)
+        expect(product_page.header).to_be_visible()
         product_page.add_product()
         assert product_page.delete_button.is_visible()
         assert product_page.get_text(product_page.delete_button) == "Remove"
