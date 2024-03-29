@@ -6,30 +6,25 @@ from pages.base_page import BasePage
 logger = logging.getLogger(__name__)
 logging.basicConfig(encoding='utf-8', level=logging.DEBUG)
 
-class ProductPage(BasePage):
-    HEADER = "#header_container"
-    SECONDARY_HEADER = "//div[@class='header_secondary_container']/span"
-    SIDEBAR_MENU = "#react-burger-menu-btn"
-    ABOUT_LINK = "#about_sidebar_link"
-    ADD_CART_BTN = "#add-to-cart-{}"
-    REMOVE_CARD_BTN = "#remove-{}"
+class Productage(BasePage):
+    HEADER = "#inventory_item_containe"
+    ADD_CART_BTN = "#add-to-cart"
+    REMOVE_CARD_BTN = "#remove"
     CART_BADGE = '.shopping_cart_badge'
+    PRODUCT_TITLE = "//div[@data-test='inventory-item-name' and text()='{}']"
+    PRODUCT_DESCRIPTION = "//div[@data-test='inventory-item-desc']"
+    PRODUCT_PRICE = "//div[@data-test='inventory-item-desc']"
 
     def __init__(self, page: Page) -> None:
         self.page = page
         self.header = self.page.locator(self.HEADER)
-        self.secondary_header = self.page.locator(self.SECONDARY_HEADER)
-        self.sidebar_menu = self.page.locator(self.SIDEBAR_MENU)
-        self.about_link = self.page.locator(self.ABOUT_LINK)
-        self.cart_badge = self.page.locator(self.CART_BADGE)
-    
-    def select_menu_option(self, option: Locator):
-        self.sidebar_menu.click()
-        option.click()
-    
-    def add_product_by_name(self, product_name: str):
-        name_id = product_name.replace(' ','-').lower()
-        self.add_button = self.page.locator(self.ADD_CART_BTN.format(name_id))
-        self.add_button.click()
-        self.delete_button = self.page.locator(self.REMOVE_CARD_BTN.format(name_id))
+        self.add_to_cart = self.page.locator(self.ADD_CART_BTN)
+        self.product_title = self.page.locator(self.PRODUCT_TITLE)
+        self.product_price = self.page.locator(self.PRODUCT_PRICE)
+        self.product_description = self.page.locator(self.PRODUCT_DESCRIPTION)
 
+
+    def add_product(self):
+        self.add_to_cart.click()
+        self.delete_button = self.page.locator(self.REMOVE_CARD_BTN)
+        self.cart_badge = self.page.locator(self.CART_BADGE)
