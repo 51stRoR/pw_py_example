@@ -11,32 +11,37 @@ logging.basicConfig(encoding='utf-8', level=logging.DEBUG)
 
 class TestCart:
 
-    def test_add_products_from_grid(self, browser: Browser, standard_user_data):
+    @pytest.fixture(autouse=True)
+    def setup_data(self, load_test_data):
+        self.standard_user_data = load_test_data['test_users']['standard']
+        self.test_items = load_test_data['test_items']
+
+    def test_add_products_from_grid(self, browser: Browser):
         page = browser.new_page()
         login_page = LoginPage(page)
         product_grid_page = ProductGridPage(page)
         login_page.navigate(login_page.URL)
-        login_page.login_user(standard_user_data['username'], standard_user_data['password'])
+        login_page.login_user(self.standard_user_data['username'], self.standard_user_data['password'])
         expect(product_grid_page.header).to_be_visible()
-        product_grid_page.add_product_by_name("Sauce Labs Bolt T-Shirt")
+        product_grid_page.add_product_by_name(self.test_items[0]['name'])
         assert product_grid_page.delete_button.is_visible()
         assert product_grid_page.get_text(product_grid_page.delete_button) == "Remove"
         assert product_grid_page.cart_badge.is_visible()
         assert product_grid_page.get_text(product_grid_page.cart_badge) == "1"
-        product_grid_page.add_product_by_name("Sauce Labs Fleece Jacket")
+        product_grid_page.add_product_by_name(self.test_items[1]['name'])
         assert product_grid_page.delete_button.is_visible()
         assert product_grid_page.get_text(product_grid_page.delete_button) == "Remove"
         assert product_grid_page.cart_badge.is_visible()
         assert product_grid_page.get_text(product_grid_page.cart_badge) == "2"
 
-    def test_add_product(self, browser: Browser, standard_user_data):
+    def test_add_product(self, browser: Browser):
         page = browser.new_page()
         login_page = LoginPage(page)
         product_grid_page = ProductGridPage(page)
         login_page.navigate(login_page.URL)
-        login_page.login_user(standard_user_data['username'], standard_user_data['password'])
+        login_page.login_user(self.standard_user_data['username'], self.standard_user_data['password'])
         expect(product_grid_page.header).to_be_visible()
-        product_grid_page.go_to_product_page("Sauce Labs Bolt T-Shirt")
+        product_grid_page.go_to_product_page(self.test_items[0]['name'])
         product_page = Productage(page)
         expect(product_page.header).to_be_visible()
         product_page.add_product()

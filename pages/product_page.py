@@ -7,7 +7,7 @@ logger = logging.getLogger(__name__)
 logging.basicConfig(encoding='utf-8', level=logging.DEBUG)
 
 class Productage(BasePage):
-    HEADER = "#inventory_item_containe"
+    HEADER = "#inventory_item_container"
     ADD_CART_BTN = "#add-to-cart"
     REMOVE_CARD_BTN = "#remove"
     CART_BADGE = '.shopping_cart_badge'
