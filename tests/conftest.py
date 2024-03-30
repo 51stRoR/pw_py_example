@@ -10,26 +10,12 @@ logging.basicConfig(encoding='utf-8', level=logging.DEBUG)
 def pytest_addoption(parser):
     parser.addoption("--setup", default="setup.yaml", help="test data setup yaml")
 
-def load_test_data(file_path):
-    logger.info(f"loading yaml file with test data: {file_path}")
-    with open(file_path, "r") as file:
+@pytest.fixture(scope="class")
+def load_test_data(request):
+    filename = request.config.getoption("--setup")
+    logger.info(f"loading yaml file with test data: {filename}")
+    with open(filename, "r") as file:
         test_data = yaml.safe_load(file)
-    return test_data.get("test_users", {})
-
-@pytest.fixture(scope="class")
-def standard_user_data(request):
-    logger.info("Loading standard user data...")
-    file_path = request.config.getoption("--setup")
-    test_data = load_test_data(file_path).get("standard", {})
-    logger.info(f"standard user data: {test_data}")
-    return test_data
-
-@pytest.fixture(scope="class")
-def locked_user_data(request):
-    logger.info("Loading locked user data...")
-    file_path = request.config.getoption("--setup")
-    test_data = load_test_data(file_path).get("locked", {})
-    logger.info(f"locked user data: {test_data}")
     return test_data
 
 @pytest.fixture(scope="function")

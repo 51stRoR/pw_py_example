@@ -1,3 +1,5 @@
+links:
+  about_link: "https://saucelabs.com/"
 test_users:
   standard:
     username: "standard_user"

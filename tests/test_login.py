@@ -8,22 +8,29 @@ from pages.products_page import ProductGridPage
 logger = logging.getLogger(__name__)
 logging.basicConfig(encoding='utf-8', level=logging.DEBUG)
 
+
 class TestLogin:
 
-    def test_login(self, browser: Browser, standard_user_data):
+    @pytest.fixture(autouse=True)
+    def setup_data(self, load_test_data):
+        test_users = load_test_data['test_users']
+        self.standard_user_data = test_users['standard']
+        self.locked_user_data = test_users['locked']
+
+    def test_login(self, browser: Browser):
         page = browser.new_page()
         login_page = LoginPage(page)
         product_page = ProductGridPage(page)
         login_page.navigate(login_page.URL)
-        login_page.login_user(standard_user_data['username'], standard_user_data['password'])
+        login_page.login_user(self.standard_user_data['username'], self.standard_user_data['password'])
         expect(product_page.header).to_be_visible()
         assert product_page.get_text(product_page.secondary_header) == "Products"
 
-    def test_login_locked(self, browser: Browser, locked_user_data):
+    def test_login_locked(self, browser: Browser):
         page = browser.new_page()
         login_page = LoginPage(page)
         login_page.navigate(login_page.URL)
-        login_page.login_user(locked_user_data['username'], locked_user_data['password'])
+        login_page.login_user(self.locked_user_data['username'], self.locked_user_data['password'])
         expect(login_page.locked_user_error_msg).to_be_visible()
         assert login_page.get_text(login_page.locked_user_error_msg) == "Epic sadface: Sorry, this user has been locked out."
 
