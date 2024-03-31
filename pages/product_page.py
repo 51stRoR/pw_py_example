@@ -9,7 +9,7 @@ logging.basicConfig(encoding='utf-8', level=logging.DEBUG)
 class ProductPage(BasePage):
     HEADER = "#inventory_item_container"
     ADD_CART_BTN = "#add-to-cart"
-    REMOVE_CARD_BTN = "#remove"
+    REMOVE_CART_BTN = "#remove"
     CART_BADGE = '.shopping_cart_badge'
     PRODUCT_TITLE = "//div[@data-test='inventory-item-name' and text()='{}']"
     PRODUCT_DESCRIPTION = "//div[@data-test='inventory-item-desc']"
@@ -26,5 +26,5 @@ class ProductPage(BasePage):
 
     def add_product(self):
         self.add_to_cart.click()
-        self.delete_button = self.page.locator(self.REMOVE_CARD_BTN)
+        self.delete_button = self.page.locator(self.REMOVE_CART_BTN)
         self.cart_badge = self.page.locator(self.CART_BADGE)

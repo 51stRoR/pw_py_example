@@ -4,6 +4,7 @@ from playwright.sync_api import Page, Browser, expect
 from pages.login_page import LoginPage
 from pages.products_page import ProductGridPage
 from pages.product_page import ProductPage
+from pages.cart_page import CartPage
 
 
 logger = logging.getLogger(__name__)
@@ -52,3 +53,25 @@ class TestCart:
         assert product_page.delete_button.text_content() == "Remove"
         assert product_page.cart_badge.is_visible()
         assert product_page.cart_badge.text_content() == "1"
+    
+    def test_cart_page(self, browser: Browser):
+        page = browser.new_page()
+        login_page = LoginPage(page)
+        product_grid_page = ProductGridPage(page)
+        login_page.navigate(login_page.URL)
+        login_page.login_user(self.standard_user_data['username'], self.standard_user_data['password'])
+        expect(product_grid_page.header).to_be_visible()
+        product_grid_page.add_product_by_name(self.test_items[0]['name'])
+        product_grid_page.add_product_by_name(self.test_items[1]['name'])
+        product_grid_page.cart_icon.click()
+        cart_page = CartPage(page)
+        expect(cart_page.header).to_be_visible()
+        assert cart_page.checkout_btn.is_visible()
+        assert cart_page.continue_btn.is_visible()
+        for product in self.test_items:
+            cart_page.get_data_by_product(product, self.test_items.index(product))
+            assert cart_page.product_qty.text_content() == '1'
+            assert cart_page.product_title.text_content() == product['name']
+            assert cart_page.product_description.text_content() == product['description']
+            assert cart_page.product_price.text_content() == f"${product['price']}"
+            assert cart_page.remove_btn.is_visible()

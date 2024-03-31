@@ -12,8 +12,9 @@ class ProductGridPage(BasePage):
     SIDEBAR_MENU = "#react-burger-menu-btn"
     ABOUT_LINK = "#about_sidebar_link"
     ADD_CART_BTN = "#add-to-cart-{}"
-    REMOVE_CARD_BTN = "#remove-{}"
+    REMOVE_CART_BTN = "#remove-{}"
     CART_BADGE = '.shopping_cart_badge'
+    CART_ICON = '.shopping_cart_link'
     PRODUCT_TITLE = "//div[@data-test='inventory-item-name' and text()='{}']"
 
     def __init__(self, page: Page) -> None:
@@ -22,6 +23,7 @@ class ProductGridPage(BasePage):
         self.secondary_header = self.page.locator(self.SECONDARY_HEADER)
         self.sidebar_menu = self.page.locator(self.SIDEBAR_MENU)
         self.about_link = self.page.locator(self.ABOUT_LINK)
+        self.cart_icon = self.page.locator(self.CART_ICON)
     
     def select_menu_option(self, option: Locator):
         self.sidebar_menu.click()
@@ -31,7 +33,7 @@ class ProductGridPage(BasePage):
         name_id = product_name.replace(' ','-').lower()
         self.add_button = self.page.locator(self.ADD_CART_BTN.format(name_id))
         self.add_button.click()
-        self.delete_button = self.page.locator(self.REMOVE_CARD_BTN.format(name_id))
+        self.delete_button = self.page.locator(self.REMOVE_CART_BTN.format(name_id))
         self.cart_badge = self.page.locator(self.CART_BADGE)
     
     def go_to_product_page(self, product_name: str):
