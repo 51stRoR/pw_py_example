@@ -24,7 +24,7 @@ class TestLogin:
         login_page.navigate(login_page.URL)
         login_page.login_user(self.standard_user_data['username'], self.standard_user_data['password'])
         expect(product_page.header).to_be_visible()
-        assert product_page.get_text(product_page.secondary_header) == "Products"
+        assert product_page.secondary_header.text_content() == "Products"
 
     def test_login_locked(self, browser: Browser):
         page = browser.new_page()
@@ -32,5 +32,5 @@ class TestLogin:
         login_page.navigate(login_page.URL)
         login_page.login_user(self.locked_user_data['username'], self.locked_user_data['password'])
         expect(login_page.locked_user_error_msg).to_be_visible()
-        assert login_page.get_text(login_page.locked_user_error_msg) == "Epic sadface: Sorry, this user has been locked out."
+        assert login_page.locked_user_error_msg.text_content() == "Epic sadface: Sorry, this user has been locked out."
 
