@@ -11,10 +11,10 @@ class LoginPage(BasePage):
     PASSWORD = "#password"
     LOGIN_BTN = "#login-button"
     LOCKED_USER_ERROR = "//div[@class='error-message-container error']"
-    URL = "https://www.saucedemo.com/"
 
-    def __init__(self, page: Page) -> None:
+    def __init__(self, page: Page, base_url=None) -> None:
         self.page = page
+        self.url = base_url if base_url else self.BASE_URL
         self.username = self.page.locator(self.USERNAME)
         self.password = self.page.locator(self.PASSWORD)
         self.login = self.page.locator(self.LOGIN_BTN)

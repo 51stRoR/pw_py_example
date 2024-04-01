@@ -6,7 +6,8 @@ from pages.base_page import BasePage
 logger = logging.getLogger(__name__)
 logging.basicConfig(encoding='utf-8', level=logging.DEBUG)
 
-class ProductGridPage(BasePage):
+class InventoryPage(BasePage):
+    URL = "inventory.html"
     HEADER = "#header_container"
     SECONDARY_HEADER = "//div[@class='header_secondary_container']/span"
     SIDEBAR_MENU = "#react-burger-menu-btn"
@@ -17,7 +18,8 @@ class ProductGridPage(BasePage):
     CART_ICON = '.shopping_cart_link'
     PRODUCT_TITLE = "//div[@data-test='inventory-item-name' and text()='{}']"
 
-    def __init__(self, page: Page) -> None:
+    def __init__(self, page: Page, base_url=None) -> None:
+        self.url = f"{base_url}{self.URL}" if base_url else f"{self.BASE_URL}{self.URL}"
         self.page = page
         self.header = self.page.locator(self.HEADER)
         self.secondary_header = self.page.locator(self.SECONDARY_HEADER)

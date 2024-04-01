@@ -7,6 +7,7 @@ logger = logging.getLogger(__name__)
 logging.basicConfig(encoding='utf-8', level=logging.DEBUG)
 
 class CartPage(BasePage):
+    URL = "/cart.html"
     HEADER = "#header_container"
     PRODUCT_QTY = "//div[@data-test='item-quantity']"
     PRODUCT_TITLE = "//div[@data-test='inventory-item-name' and text()='{}']"
@@ -16,8 +17,9 @@ class CartPage(BasePage):
     CONTINUE_BTN = "#continue-shopping"
     CHECKOUT_BTN = "#checkout"
 
-    def __init__(self, page: Page) -> None:
+    def __init__(self, page: Page, base_url: str) -> None:
         self.page = page
+        self.url = f"{base_url}{self.URL}" if base_url else f"{self.BASE_URL}{self.URL}"
         self.header = self.page.locator(self.HEADER)
         self.checkout_btn = self.page.locator(self.CHECKOUT_BTN)
         self.continue_btn = self.page.locator(self.CONTINUE_BTN)

@@ -18,7 +18,7 @@ def load_test_data(request):
         test_data = yaml.safe_load(file)
     return test_data
 
-@pytest.fixture(scope="function")
+@pytest.fixture(scope="class")
 def browser(request):
     browser_type = request.config.getoption("--browser")
     with sync_playwright() as p:

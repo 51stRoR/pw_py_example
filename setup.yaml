@@ -1,3 +1,4 @@
+base_url: "https://www.saucedemo.com/"
 links:
   about_link: "https://saucelabs.com/"
 test_users:
@@ -9,8 +10,10 @@ test_users:
     password: "secret_sauce"
 test_items:
   - name: "Sauce Labs Backpack"
+    id: 4
     description: "carry.allTheThings() with the sleek, streamlined Sly Pack that melds uncompromising style with unequaled laptop and tablet protection."
     price: "29.99"
   - name: "Sauce Labs Bolt T-Shirt"
+    id: 1
     description: "Get your testing superhero on with the Sauce Labs bolt T-shirt. From American Apparel, 100% ringspun combed cotton, heather gray with red bolt."
     price: "15.99"

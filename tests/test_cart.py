@@ -2,7 +2,7 @@ import logging
 import pytest
 from playwright.sync_api import Page, Browser, expect
 from pages.login_page import LoginPage
-from pages.products_page import ProductGridPage
+from pages.inventory_page import InventoryPage
 from pages.product_page import ProductPage
 from pages.cart_page import CartPage
 
@@ -20,7 +20,7 @@ class TestCart:
     def test_add_products_from_grid(self, browser: Browser):
         page = browser.new_page()
         login_page = LoginPage(page)
-        product_grid_page = ProductGridPage(page)
+        product_grid_page = InventoryPage(page)
         login_page.navigate(login_page.URL)
         login_page.login_user(self.standard_user_data['username'], self.standard_user_data['password'])
         expect(product_grid_page.header).to_be_visible()
@@ -38,7 +38,7 @@ class TestCart:
     def test_add_product(self, browser: Browser):
         page = browser.new_page()
         login_page = LoginPage(page)
-        product_grid_page = ProductGridPage(page)
+        product_grid_page = InventoryPage(page)
         login_page.navigate(login_page.URL)
         login_page.login_user(self.standard_user_data['username'], self.standard_user_data['password'])
         expect(product_grid_page.header).to_be_visible()
@@ -57,7 +57,7 @@ class TestCart:
     def test_cart_page(self, browser: Browser):
         page = browser.new_page()
         login_page = LoginPage(page)
-        product_grid_page = ProductGridPage(page)
+        product_grid_page = InventoryPage(page)
         login_page.navigate(login_page.URL)
         login_page.login_user(self.standard_user_data['username'], self.standard_user_data['password'])
         expect(product_grid_page.header).to_be_visible()
