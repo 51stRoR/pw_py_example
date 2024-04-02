@@ -12,6 +12,7 @@ class ProductPage(BasePage):
     ADD_CART_BTN = "#add-to-cart"
     REMOVE_CART_BTN = "#remove"
     CART_BADGE = '.shopping_cart_badge'
+    CART_ICON = '.shopping_cart_link'
     PRODUCT_TITLE = "//div[@data-test='inventory-item-name' and text()='{}']"
     PRODUCT_DESCRIPTION = "//div[@data-test='inventory-item-desc']"
     PRODUCT_PRICE = "//div[@data-test='inventory-item-price']"
@@ -21,6 +22,7 @@ class ProductPage(BasePage):
         url = self.URL.format(product['id'])
         self.url = f"{base_url}{url}" if base_url else f"{self.BASE_URL}{url}"
         self.header = self.page.locator(self.HEADER)
+        self.cart_icon = self.page.locator(self.CART_ICON)
         self.add_to_cart = self.page.locator(self.ADD_CART_BTN)
         self.product_title = self.page.locator(self.PRODUCT_TITLE.format(product['name']))
         self.product_price = self.page.locator(self.PRODUCT_PRICE)

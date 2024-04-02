@@ -24,12 +24,10 @@ class TestLogin:
         login_page = LoginPage(page, self.base_url)
         login_page.navigate(login_page.url)
         login_page.login_user(self.standard_user_data['username'], self.standard_user_data['password'])
-        product_page = InventoryPage(page, self.base_url)
-        expect(product_page.header).to_be_visible()
-        assert product_page.secondary_header.text_content() == "Products"
-        logger.debug(product_page.url)
-        logger.debug(page.url)
-        assert product_page.url == page.url
+        inventory_page = InventoryPage(page, self.base_url)
+        expect(inventory_page.header).to_be_visible()
+        assert inventory_page.secondary_header.text_content() == "Products"
+        assert inventory_page.url == page.url
 
     def test_login_locked(self):
         page = self.context.new_page()
@@ -38,6 +36,4 @@ class TestLogin:
         login_page.login_user(self.locked_user_data['username'], self.locked_user_data['password'])
         expect(login_page.locked_user_error_msg).to_be_visible()
         assert login_page.locked_user_error_msg.text_content() == "Epic sadface: Sorry, this user has been locked out."
-        logger.debug(login_page.url)
-        logger.debug(page.url)
         assert login_page.url == page.url

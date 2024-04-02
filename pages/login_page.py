@@ -11,6 +11,7 @@ class LoginPage(BasePage):
     PASSWORD = "#password"
     LOGIN_BTN = "#login-button"
     LOCKED_USER_ERROR = "//div[@class='error-message-container error']"
+    LOGIN_CONTAINER = "//div[@data-test='login-credentials-container']"
 
     def __init__(self, page: Page, base_url=None) -> None:
         self.page = page
@@ -19,13 +20,11 @@ class LoginPage(BasePage):
         self.password = self.page.locator(self.PASSWORD)
         self.login = self.page.locator(self.LOGIN_BTN)
         self.locked_user_error_msg = self.page.locator(self.LOCKED_USER_ERROR)
+        self.login_container = self.page.locator(self.LOGIN_CONTAINER)
     
     def login_user(self, username: str, password: str):
-        logger.info(f"enter username: {username}")
         self.enter_text(self.username, username)
-        logger.info(f"enter password: {password}")
         self.enter_text(self.password, password)
-        logger.info("click login button")
         self.login.click()
     
 

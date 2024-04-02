@@ -21,9 +21,9 @@ class TestLinks:
         login_page = LoginPage(self.page, self.base_url)
         login_page.navigate(login_page.url)
         login_page.login_user(self.standard_user_data['username'], self.standard_user_data['password'])
-        product_page = InventoryPage(self.page, self.base_url)
-        expect(product_page.header).to_be_visible()
-        product_page.select_menu_option(product_page.about_link)
-        product_page.wait_for_url(self.about_link)
+        inventory_page = InventoryPage(self.page, self.base_url)
+        expect(inventory_page.header).to_be_visible()
+        inventory_page.select_menu_option(inventory_page.about_link)
+        inventory_page.wait_for_url(self.about_link)
         assert self.page.url == self.about_link
         assert self.page.title() == "Sauce Labs: Cross Browser Testing, Selenium Testing & Mobile Testing"

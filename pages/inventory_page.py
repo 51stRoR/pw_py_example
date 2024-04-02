@@ -12,6 +12,7 @@ class InventoryPage(BasePage):
     SECONDARY_HEADER = "//div[@class='header_secondary_container']/span"
     SIDEBAR_MENU = "#react-burger-menu-btn"
     ABOUT_LINK = "#about_sidebar_link"
+    LOGOUT_LINK = "#logout_sidebar_link"
     ADD_CART_BTN = "#add-to-cart-{}"
     REMOVE_CART_BTN = "#remove-{}"
     CART_BADGE = '.shopping_cart_badge'
@@ -25,6 +26,7 @@ class InventoryPage(BasePage):
         self.secondary_header = self.page.locator(self.SECONDARY_HEADER)
         self.sidebar_menu = self.page.locator(self.SIDEBAR_MENU)
         self.about_link = self.page.locator(self.ABOUT_LINK)
+        self.logout_link = self.page.locator(self.LOGOUT_LINK)
         self.cart_icon = self.page.locator(self.CART_ICON)
     
     def select_menu_option(self, option: Locator):
