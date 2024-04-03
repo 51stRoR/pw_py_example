@@ -1,14 +1,13 @@
 import logging
 from playwright.sync_api import Page
-from pages.base_page import BasePage
+from pages.base_page import HeaderPage
 
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(encoding='utf-8', level=logging.DEBUG)
 
-class CartPage(BasePage):
+class CartPage(HeaderPage):
     URL = "/cart.html"
-    HEADER = "#header_container"
     PRODUCT_QTY = "//div[@data-test='item-quantity']"
     PRODUCT_TITLE = "//div[@data-test='inventory-item-name' and text()='{}']"
     PRODUCT_DESCRIPTION = "//div[@data-test='inventory-item-desc']"
@@ -18,8 +17,7 @@ class CartPage(BasePage):
     CHECKOUT_BTN = "#checkout"
 
     def __init__(self, page: Page, base_url: str) -> None:
-        self.page = page
-        self.url = f"{base_url}{self.URL}" if base_url else f"{self.BASE_URL}{self.URL}"
+        super().__init__(page, base_url)
         self.header = self.page.locator(self.HEADER)
         self.checkout_btn = self.page.locator(self.CHECKOUT_BTN)
         self.continue_btn = self.page.locator(self.CONTINUE_BTN)

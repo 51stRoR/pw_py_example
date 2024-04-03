@@ -5,7 +5,7 @@ from pages.login_page import LoginPage
 from pages.inventory_page import InventoryPage
 from pages.product_page import ProductPage
 from pages.cart_page import CartPage
-from pages.checkout_page import CheckoutPage, CheckoutCompletePage
+from pages.checkout_page import CheckoutInformationPage, CheckoutOverviewPage, CheckoutCompletePage
 
 
 logger = logging.getLogger(__name__)
@@ -63,26 +63,27 @@ class TestCart:
             assert self.cart_page.remove_btn.is_visible()
         
         self.cart_page.checkout_btn.click()
-        self.checkout_page = CheckoutPage(self.page, self.base_url)
+        self.checkout_page = CheckoutInformationPage(self.page, self.base_url)
         expect(self.checkout_page.header).to_be_visible()
         assert self.checkout_page.first_name.is_visible()
         assert self.checkout_page.last_name.is_visible()
         assert self.checkout_page.postal_code.is_visible()
         assert self.checkout_page.continue_btn.is_visible()
         self.checkout_page.fill_user_info(self.standard_user_data['first_name'], self.standard_user_data['last_name'], self.standard_user_data['zip'])
-        self.checkout_page.continue_checkout()
+        self.checkout_page.continue_btn.click()
+        self.checkout_overview_page = CheckoutOverviewPage(self.page, self.base_url)
         for product in self.test_items:
-            self.checkout_page.get_data_by_product(product, self.test_items.index(product))
-            assert self.checkout_page.product_qty.text_content() == '1'
-            assert self.checkout_page.product_title.text_content() == product['name']
-            assert self.checkout_page.product_description.text_content() == product['description']
-            assert self.checkout_page.product_price.text_content() == f"${product['price']}"
-        self.checkout_page.calculate_total_price()
-        assert self.checkout_page.total_item_price_label.text_content() == f"Item total: ${self.checkout_page.item_price:.2f}"
-        assert self.checkout_page.total_tax_label.text_content() == f"Tax: ${self.checkout_page.tax_price:.2f}"
-        assert self.checkout_page.total_price_label.text_content() == f"Total: ${self.checkout_page.total_price:.2f}"
-        assert self.checkout_page.finish_btn.is_visible()
-        self.checkout_page.finish_btn.click()
+            self.checkout_overview_page.get_data_by_product(product, self.test_items.index(product))
+            assert self.checkout_overview_page.product_qty.text_content() == '1'
+            assert self.checkout_overview_page.product_title.text_content() == product['name']
+            assert self.checkout_overview_page.product_description.text_content() == product['description']
+            assert self.checkout_overview_page.product_price.text_content() == f"${product['price']}"
+        self.checkout_overview_page.calculate_total_price()
+        assert self.checkout_overview_page.total_item_price_label.text_content() == f"Item total: ${self.checkout_overview_page.item_price:.2f}"
+        assert self.checkout_overview_page.total_tax_label.text_content() == f"Tax: ${self.checkout_overview_page.tax_price:.2f}"
+        assert self.checkout_overview_page.total_price_label.text_content() == f"Total: ${self.checkout_overview_page.total_price:.2f}"
+        assert self.checkout_overview_page.finish_btn.is_visible()
+        self.checkout_overview_page.finish_btn.click()
         self.complete_page = CheckoutCompletePage(self.page, self.base_url)
         assert self.complete_page.complete_header.text_content() == "Thank you for your order!"
         assert self.complete_page.complete_text.text_content() == "Your order has been dispatched, and will arrive just as fast as the pony can get there!"
