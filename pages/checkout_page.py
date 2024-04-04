@@ -8,6 +8,7 @@ logging.basicConfig(encoding='utf-8', level=logging.DEBUG)
 
 class CheckoutInformationPage(HeaderPage):
     URL = "/checkout-step-one.html"
+    CHECKOUT_CONTAINER = "[data-test='checkout-info-container']"
     FIRST_NAME = "#first-name"
     LAST_NAME = "#last-name"
     POSTAL_CODE = "#postal-code"
@@ -16,6 +17,7 @@ class CheckoutInformationPage(HeaderPage):
 
     def __init__(self, page: Page, base_url: str) -> None:
         super().__init__(page, base_url)
+        self.check_container = self.page.locator(self.CHECKOUT_CONTAINER)
         self.continue_btn = self.page.locator(self.CONTINUE_BTN)
         self.cancel_btn = self.page.locator(self.CANCEL_BTN)
         self.first_name = self.page.locator(self.FIRST_NAME)

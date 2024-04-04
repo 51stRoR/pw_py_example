@@ -25,7 +25,7 @@ class TestCart:
         self.login_page.navigate(self.login_page.url)
         self.login_page.login_user(self.standard_user_data['username'], self.standard_user_data['password'])
         self.inventory_page = InventoryPage(self.page, self.base_url)
-        expect(self.inventory_page.header).to_be_visible()
+        expect(self.inventory_page.inventory_container).to_be_visible()
         self.inventory_page.add_product_by_name(self.test_items[0]['name'])
         assert self.inventory_page.delete_button.is_visible()
         assert self.inventory_page.delete_button.text_content() == "Remove"
@@ -38,7 +38,7 @@ class TestCart:
         assert self.inventory_page.cart_badge.text_content() == "2"
         self.inventory_page.go_to_product_page(self.test_items[2]['name'])
         self.product_page = ProductPage(self.page, self.test_items[2], self.base_url)
-        expect(self.product_page.header).to_be_visible()
+        expect(self.product_page.product_container).to_be_visible()
         assert self.product_page.add_to_cart.is_visible()
         assert self.product_page.product_title.text_content() == self.test_items[2]['name']
         assert self.product_page.product_description.text_content() == self.test_items[2]['description']
@@ -51,7 +51,7 @@ class TestCart:
         self.product_page = ProductPage(self.page, self.test_items[2], self.base_url)
         self.product_page.cart_icon.click()
         self.cart_page = CartPage(self.page, self.base_url)
-        expect(self.cart_page.header).to_be_visible()
+        expect(self.cart_page.cart_container).to_be_visible()
         assert self.cart_page.checkout_btn.is_visible()
         assert self.cart_page.continue_btn.is_visible()
         for product in self.test_items:
@@ -64,7 +64,7 @@ class TestCart:
         
         self.cart_page.checkout_btn.click()
         self.checkout_page = CheckoutInformationPage(self.page, self.base_url)
-        expect(self.checkout_page.header).to_be_visible()
+        expect(self.checkout_page.check_container).to_be_visible()
         assert self.checkout_page.first_name.is_visible()
         assert self.checkout_page.last_name.is_visible()
         assert self.checkout_page.postal_code.is_visible()
@@ -89,7 +89,7 @@ class TestCart:
         assert self.complete_page.complete_text.text_content() == "Your order has been dispatched, and will arrive just as fast as the pony can get there!"
         assert self.complete_page.back_btn.is_visible()
         self.complete_page.back_btn.click()
-        expect(self.inventory_page.header).to_be_visible()
+        expect(self.inventory_page.inventory_container).to_be_visible()
         self.inventory_page.select_menu_option(self.inventory_page.logout_link)
         self.login_page.wait_for_url(self.base_url)
         assert self.login_page.login_container.is_visible()

@@ -22,7 +22,7 @@ class TestLinks:
         login_page.navigate(login_page.url)
         login_page.login_user(self.standard_user_data['username'], self.standard_user_data['password'])
         inventory_page = InventoryPage(self.page, self.base_url)
-        expect(inventory_page.header).to_be_visible()
+        expect(inventory_page.inventory_container).to_be_visible()
         inventory_page.select_menu_option(inventory_page.about_link)
         inventory_page.wait_for_url(self.about_link)
         assert self.page.url == self.about_link

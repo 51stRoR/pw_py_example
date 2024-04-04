@@ -8,6 +8,7 @@ logging.basicConfig(encoding='utf-8', level=logging.DEBUG)
 
 class ProductPage(HeaderPage):
     URL = "/inventory-item.html?id={}"
+    PRODUCT_CONTAINER = "[data-test='inventory-container']"
     ADD_CART_BTN = "#add-to-cart"
     REMOVE_CART_BTN = "#remove"
     PRODUCT_TITLE = "//div[@data-test='inventory-item-name' and text()='{}']"
@@ -18,6 +19,7 @@ class ProductPage(HeaderPage):
         super().__init__(page, base_url)
         url = self.URL.format(product['id'])
         self.url = f"{base_url}{url}" if base_url else f"{self.BASE_URL}{url}"
+        self.product_container = self.page.locator(self.PRODUCT_CONTAINER)
         self.add_to_cart = self.page.locator(self.ADD_CART_BTN)
         self.product_title = self.page.locator(self.PRODUCT_TITLE.format(product['name']))
         self.product_price = self.page.locator(self.PRODUCT_PRICE)

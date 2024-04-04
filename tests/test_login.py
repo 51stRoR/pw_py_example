@@ -25,7 +25,7 @@ class TestLogin:
         login_page.navigate(login_page.url)
         login_page.login_user(self.standard_user_data['username'], self.standard_user_data['password'])
         inventory_page = InventoryPage(page, self.base_url)
-        expect(inventory_page.header).to_be_visible()
+        expect(inventory_page.inventory_container).to_be_visible()
         assert inventory_page.secondary_header.text_content() == "Products"
         assert inventory_page.url == page.url
 

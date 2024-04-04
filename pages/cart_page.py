@@ -8,6 +8,7 @@ logging.basicConfig(encoding='utf-8', level=logging.DEBUG)
 
 class CartPage(HeaderPage):
     URL = "/cart.html"
+    CART_CONTAINER = "#cart_contents_container"
     PRODUCT_QTY = "//div[@data-test='item-quantity']"
     PRODUCT_TITLE = "//div[@data-test='inventory-item-name' and text()='{}']"
     PRODUCT_DESCRIPTION = "//div[@data-test='inventory-item-desc']"
@@ -19,6 +20,7 @@ class CartPage(HeaderPage):
     def __init__(self, page: Page, base_url: str) -> None:
         super().__init__(page, base_url)
         self.header = self.page.locator(self.HEADER)
+        self.cart_container = self.page.locator(self.CART_CONTAINER)
         self.checkout_btn = self.page.locator(self.CHECKOUT_BTN)
         self.continue_btn = self.page.locator(self.CONTINUE_BTN)
     

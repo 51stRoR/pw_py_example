@@ -25,9 +25,9 @@ class BasePage:
 
 
 class HeaderPage(BasePage):
-    URL = ''
-    CART_BADGE = '.shopping_cart_badge'
-    CART_ICON = '.shopping_cart_link'
+    URL = ""
+    CART_BADGE = ".shopping_cart_badge"
+    CART_ICON = ".shopping_cart_link"
     HEADER = "#header_container"
     SECONDARY_HEADER = "//div[data-test='secondary-header']/span"
     SIDEBAR_MENU = "#react-burger-menu-btn"

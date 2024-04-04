@@ -7,13 +7,15 @@ logger = logging.getLogger(__name__)
 logging.basicConfig(encoding='utf-8', level=logging.DEBUG)
 
 class InventoryPage(HeaderPage):
-    URL = "inventory.html"
+    URL = "/inventory.html"
+    INV_CONTAINER = "[data-test='inventory-container']"
     ADD_CART_BTN = "#add-to-cart-{}"
     REMOVE_CART_BTN = "#remove-{}"
     PRODUCT_TITLE = "//div[@data-test='inventory-item-name' and text()='{}']"
 
     def __init__(self, page: Page, base_url=None) -> None:
         super().__init__(page, base_url)
+        self.inventory_container = self.page.locator(self.INV_CONTAINER)
     
     def add_product_by_name(self, product_name: str):
         name_id = product_name.replace(' ','-').lower()
